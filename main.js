@@ -5,14 +5,16 @@ window.onload = function() {
 
   var core = new Core(320, 320);
 
-  core.preload('chara1.png', 'mktakuya.png', 'bgm.wav', 'clear.wav',
-               'shot.wav', 'shock.wav', 'uwa.m4a', 'gameover.wav', 'ah.wav');
+  core.preload('image/chara1.png', 'image/mktakuya.png', 'sound/bgm.wav',
+               'sound/clear.wav', 'sound/shot.wav', 'sound/shock.wav',
+               'sound/uwa.m4a', 'sound/gameover.wav', 'sound/ah.wav');
+
   core.fps = 60;
 
   core.onload = function () {
     core.keybind(' '.charCodeAt(0), 'space');
 
-    core.assets['bgm.wav'].play();
+    core.assets['sound/bgm.wav'].play();
 
     var Player = Class.create(Sprite, {
       initialize: function(x, y) {
@@ -20,7 +22,7 @@ window.onload = function() {
         this.x = x;
         this.y = y;
         this.vx = 1;
-        this.image = core.assets['chara1.png'];
+        this.image = core.assets['image/chara1.png'];
         this.frame = 4;
         this.scaleX = 1;
         this.life = 100;
@@ -34,7 +36,7 @@ window.onload = function() {
         this.y = y;
         this.vx = 1;
         this.life = 200;
-        this.image = core.assets['mktakuya.png'];
+        this.image = core.assets['image/mktakuya.png'];
       }
     })
 
@@ -43,7 +45,7 @@ window.onload = function() {
         Sprite.call(this, 32, 32);
         this.x = x;
         this.y = y;
-        this.image = core.assets['chara1.png'];
+        this.image = core.assets['image/chara1.png'];
         this.frame = 8;
       }
     })
@@ -71,12 +73,12 @@ window.onload = function() {
       if (this.intersect(enemy)) {
         this.life -=1;
         label3.text = player.life;
-        core.assets['ah.wav'].play();
+        core.assets['sound/ah.wav'].play();
       }
 
       if (this.life == 0) {
          core.pushScene(gameover);
-         core.assets['gameover.wav'].play();
+         core.assets['sound/gameover.wav'].play();
       }
 
       renda += 1;
@@ -85,14 +87,14 @@ window.onload = function() {
 
         bullet = new Bullet(this.x, 320-32-32);
         core.rootScene.addChild(bullet);
-        core.assets['shot.wav'].play();
+        core.assets['sound/shot.wav'].play();
 
         bullet.on('enterframe', function() {
           this.y -= 3;
           this.rotate(3);
           if (this.within(enemy,50)) {
-            core.assets['uwa.m4a'].play();
-            core.assets['shock.wav'].play();
+            core.assets['sound/uwa.m4a'].play();
+            core.assets['sound/shock.wav'].play();
             enemy.life -= 1;
             enemy.vx *= 1.02;
             enemy.tl.fadeOut(2)
@@ -118,7 +120,7 @@ window.onload = function() {
                                   .moveBy(0,-200,100);
       if (this.life <= 0) {
          core.pushScene(gameclear);
-         core.assets['clear.wav'].play();
+         core.assets['sound/clear.wav'].play();
       }
     })
 
